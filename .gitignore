@@ -1,6 +1,13 @@
 .gradle
 /build/
 
+out/
+build/
+run/
+classes/
+private/.gradle
+private/src
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -10,8 +17,6 @@ gradle-app.setting
 # Cache of project
 .gradletasknamecache
 
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
 
 # eclipse
 bin
@@ -27,10 +32,15 @@ out
 *.iws
 *.iml
 .idea
+.idea/
 
 # gradle
 build
 .gradle
+.gradle/
+gradle/
+gradlew
+gradlew.bat
 
 # other
 eclipse
@@ -38,3 +48,5 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+
+
