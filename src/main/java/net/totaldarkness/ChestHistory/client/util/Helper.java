@@ -1,7 +1,6 @@
 package net.totaldarkness.ChestHistory.client.util;
 
 import net.minecraft.entity.Entity;
-import net.totaldarkness.ChestHistory.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,6 +16,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class Helper {
+    public static final Minecraft MC = Minecraft.getMinecraft();
 
     public static void printError(String message, Object... args) {
         outputMessage(
@@ -64,28 +64,28 @@ public class Helper {
 
     @Nullable
     public static GuiScreen getCurrentScreen() {
-        return getMinecraft().currentScreen;
+        return MC.currentScreen;
     }
 
     @Nullable
     public static WorldClient getWorld() {
-        return getMinecraft().world;
+        return MC.world;
     }
 
     public static EntityPlayerSP getLocalPlayer() {
-        return getMinecraft().player;
+        return MC.player;
     }
 
     public static Entity getViewEntity() {
-        return getMinecraft().getRenderViewEntity();
+        return MC.getRenderViewEntity();
     }
 
     public static Minecraft getMinecraft() {
-        return Main.MC;
+        return MC;
     }
 
     public static GameSettings getGameSettings() {
-        return getMinecraft().gameSettings;
+        return MC.gameSettings;
     }
 
     public static String getDimensionName(int dim) {
@@ -102,13 +102,13 @@ public class Helper {
     }
 
     public static String getServerIP() {
-        return Optional.ofNullable(getMinecraft().getCurrentServerData())
+        return Optional.ofNullable(MC.getCurrentServerData())
                 .map(data -> data.serverIP)
                 .orElse(getSinglePlayerName());
     }
 
     public static String getSinglePlayerName() {
-        return Optional.ofNullable(getMinecraft().getIntegratedServer())
+        return Optional.ofNullable(MC.getIntegratedServer())
                 .map(MinecraftServer::getWorldName)
                 .orElse("SinglePlayer");
     }
