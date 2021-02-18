@@ -1,0 +1,16 @@
+[
+    {
+      "modid": "chesthistory",
+      "name": "Chest History",
+      "description": "Save and view chests.",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "https://github.com/TotalDarkness-NRF/ChestHistory",
+      "updateUrl": "",
+      "authorList": ["TotalDarkness"],
+      "credits": "TotalDarkness",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": []
+    }
+]
