@@ -1,7 +1,7 @@
 package net.totaldarkness.ChestHistory.client.gui;
 
-import net.totaldarkness.ChestHistory.client.services.ChestGuiService;
 import net.totaldarkness.ChestHistory.client.settings.Setting;
+import net.totaldarkness.ChestHistory.client.settings.SettingEnum;
 import net.totaldarkness.ChestHistory.client.util.Helper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -118,23 +118,10 @@ public class SettingsGui extends GuiScreen {
             setting.set(setting.getAsDouble() + direction, false);
         } else if (setting.getDefault() instanceof Boolean) {
             setting.set(!setting.getAsBoolean(), false);
-        } else {
-            if (setting.getDefault() instanceof ChestGuiService.SortingModes) {
-                ChestGuiService.SortingModes value = (ChestGuiService.SortingModes) setting.get();
-                int set = value.ordinal() + direction;
-                if (set >= ChestGuiService.SortingModes.values().length) set = 0;
-                else if (set < 0) set = ChestGuiService.SortingModes.values().length - 1;
-                setting.set(ChestGuiService.SortingModes.values()[set], false);
-                lastScreen = new ChestGui(lastScreen);
-            } else if (setting.getDefault() instanceof ChestGuiService.ChestGuiDirection) {
-                ChestGuiService.ChestGuiDirection value = (ChestGuiService.ChestGuiDirection) setting.get();
-                int set = value.ordinal() + direction;
-                if (set >= ChestGuiService.ChestGuiDirection.values().length) set = 0;
-                else if (set < 0) set = ChestGuiService.ChestGuiDirection.values().length - 1;
-                setting.set(ChestGuiService.ChestGuiDirection.values()[set], false);
-                lastScreen = new ChestGui(lastScreen);
-            }
+        } else if (setting.getDefault() instanceof Enum){
+            setting.set(SettingEnum.getOrdinal(direction, (Enum) setting.get()));
             ChestHistory.INSTANCE.reSortChestList();
+            lastScreen = new ChestGui(lastScreen);
         }
     }
 
@@ -142,9 +129,6 @@ public class SettingsGui extends GuiScreen {
         return Setting.getSetting(name);
     }
 
-    /**
-     * When gui is closed send back to either terminal or normal game
-     */
     private void onClose() {
         Helper.getMinecraft().displayGuiScreen(lastScreen);
     }

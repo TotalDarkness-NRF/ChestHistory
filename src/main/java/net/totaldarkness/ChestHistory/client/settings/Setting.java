@@ -20,7 +20,6 @@ public class Setting<E> implements Comparable<Setting<E>> {
     public static <E> Setting<E> build(final String name, final String description, final E defaultValue, final E value) {
         Setting<E> setting = new Setting<>(name, description, defaultValue, value == null ? defaultValue:value);
         list.add(setting);
-        System.out.println("Building setting: " + name);
         return setting;
     }
 
