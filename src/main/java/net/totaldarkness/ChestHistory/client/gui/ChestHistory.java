@@ -6,7 +6,6 @@ import net.totaldarkness.ChestHistory.client.services.ChestGuiService;
 import net.totaldarkness.ChestHistory.client.util.render.GeometryMasks;
 import net.totaldarkness.ChestHistory.client.util.render.GeometryTessellator;
 import net.totaldarkness.ChestHistory.client.util.ChestElement;
-import net.totaldarkness.ChestHistory.Main;
 import net.totaldarkness.ChestHistory.client.util.Helper;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
@@ -43,6 +42,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import static net.totaldarkness.ChestHistory.client.util.Helper.MC;
 import static net.totaldarkness.ChestHistory.client.util.Helper.getFileManager;
 
 public class ChestHistory {
@@ -83,7 +83,7 @@ public class ChestHistory {
     @SubscribeEvent
     public void renderMarked(final RenderGameOverlayEvent.Text event) {
         if (Helper.getCurrentScreen() instanceof ChestGui) return;
-        ChestGui.getInstance().drawMarkedList(Main.MC.displayWidth + 12, 0);
+        ChestGui.getInstance().drawMarkedList(MC.displayWidth + 12, 0);
     }
 
     /**
@@ -397,8 +397,7 @@ public class ChestHistory {
         ItemStack itemStack = ItemStack.EMPTY;
         try {
             itemStack = new ItemStack(JsonToNBT.getTagFromJson(nbtJson));
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
         return itemStack;
     }
 
@@ -413,7 +412,6 @@ public class ChestHistory {
     }
 
     private int getSaveIndex(int chestSize, int listSize) {
-        System.out.println(ChestGuiService.getSortMode());
         switch (ChestGuiService.getSortMode()) {
             case SMALLEST: {
                 if (chestSize >= 54) return listSize;
@@ -424,6 +422,8 @@ public class ChestHistory {
                 else return 0;
             }
             case RANDOM: return ThreadLocalRandom.current().nextInt(0, listSize + 1);
+            case NEWEST: return 0;
+            case OLDEST:
             default: return listSize;
         }
     }
@@ -441,7 +441,7 @@ public class ChestHistory {
     @SubscribeEvent
     public void onActionPerformed(GuiScreenEvent.ActionPerformedEvent.Post event) {
         if ((event.getGui() instanceof GuiChest || event.getGui() instanceof GuiShulkerBox) && event.getButton().id == 99) {
-            Helper.getMinecraft().displayGuiScreen(ChestGui.getInstance());
+            MC.displayGuiScreen(ChestGui.getInstance());
         }
     }
 
