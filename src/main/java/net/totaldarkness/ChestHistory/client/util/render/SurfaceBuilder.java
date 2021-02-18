@@ -1,8 +1,7 @@
 package net.totaldarkness.ChestHistory.client.util.render;
 
-import static net.totaldarkness.ChestHistory.Main.MC;
+import static net.totaldarkness.ChestHistory.client.util.Helper.MC;
 import static net.totaldarkness.ChestHistory.client.util.Helper.getLocalPlayer;
-import static net.totaldarkness.ChestHistory.client.util.Helper.getMinecraft;
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
 import static org.lwjgl.opengl.GL11.GL_POLYGON;
@@ -229,7 +228,7 @@ public class SurfaceBuilder {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, 0.D);
 
-            getMinecraft().fontRenderer.drawString(text, 0, 0, Color.of(current().getColor4d()).toBuffer(), shadow);
+            MC.fontRenderer.drawString(text, 0, 0, Color.of(current().getColor4d()).toBuffer(), shadow);
 
             GlStateManager.popMatrix();
         }

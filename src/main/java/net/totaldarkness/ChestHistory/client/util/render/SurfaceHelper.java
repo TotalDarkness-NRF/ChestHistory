@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.totaldarkness.ChestHistory.Main.MC;
+import static net.totaldarkness.ChestHistory.client.util.Helper.MC;
 import static net.totaldarkness.ChestHistory.client.util.Helper.getLocalPlayer;
 import static net.minecraft.client.renderer.GlStateManager.color;
 
