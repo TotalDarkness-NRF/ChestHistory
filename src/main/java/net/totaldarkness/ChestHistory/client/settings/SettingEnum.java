@@ -23,4 +23,14 @@ public class SettingEnum<E extends Enum<E>> extends Setting<E> {
         }
         return null;
     }
+
+    @SuppressWarnings("unchecked")
+    public static <E extends Enum<E>> Enum<E> getOrdinal(final int ordinal, final E value) {
+        final int direction = ordinal >= 0 ? 1 : -1;
+        int set = value.ordinal() + direction;
+        final int length = value.getClass().getEnumConstants().length;
+        if (set >= length) set = 0;
+        else if (set <= 0) set = length - 1;
+        return value.getClass().getEnumConstants()[set];
+    }
 }
