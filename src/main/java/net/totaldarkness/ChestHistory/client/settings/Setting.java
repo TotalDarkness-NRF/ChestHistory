@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static net.totaldarkness.ChestHistory.client.util.Helper.getFileManager;
@@ -12,6 +13,7 @@ import static net.totaldarkness.ChestHistory.client.util.Helper.printInform;
 
 @SuppressWarnings("unchecked")
 public class Setting<E> implements Comparable<Setting<E>> {
+    private static final Path config = getFileManager().getMkBaseResolve("config/config.cfg");
     public final static ArrayList<Setting<?>> list = new ArrayList<>();
     private final String name, description;
     final E defaultValue;
@@ -24,7 +26,7 @@ public class Setting<E> implements Comparable<Setting<E>> {
     }
 
     public static <E> Setting<E> build(final String name, final String description, final E defaultValue) {
-        return build(name, description, defaultValue, (E) new Setting<>().readSetting(name));
+        return build(name, description, defaultValue, (E) new Setting<>(defaultValue).readSetting(name));
     }
 
     Setting(final String name, final String description,final E defaultValue, final E value) {
@@ -34,7 +36,7 @@ public class Setting<E> implements Comparable<Setting<E>> {
         this.value = value;
     }
 
-    private Setting() { name = description = null; defaultValue = null;}
+    private Setting(final E defaultValue) { name = description = null; this.defaultValue = defaultValue;}
 
     public E get() {
         return value;
@@ -99,26 +101,35 @@ public class Setting<E> implements Comparable<Setting<E>> {
     E readSetting(final String name) {
         try {
             final String line = getLineWithName(name);
-            return parseValue(line.substring(line.indexOf(':')));
+            return parseValue(line.substring(line.indexOf(": ")));
         } catch (Exception ignored) {return writeSetting(name, defaultValue);}
     }
 
     E writeSetting(final String name, final E value) {
-        final Path path = getFileManager().getMkBaseResolve("config/config.cfg");
-        // TODO not writing settings
         try {
-            if (!path.toFile().exists()) Files.write(path, (name + ':' + value).getBytes(), StandardOpenOption.WRITE);
-            final List<String> lines = Files.readAllLines(path);
-            lines.set(lines.indexOf(getLineWithName(name)), name + ':' + value);
-            StringBuilder string = new StringBuilder();
-            lines.forEach(line -> string.append(line).append("\n")); // TODO creates empty lines
-            Files.write(path, string.toString().getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+            if (!config.toFile().exists()) Files.write(config, (name + ": " + value).getBytes(), StandardOpenOption.CREATE);
+            else {
+                final List<String> lines = Files.readAllLines(config);
+                Collections.sort(lines);
+                int index = lines.indexOf(getLineWithName(name));
+                if (index < 0) {
+                    final String line = name + ": " + value;
+                    Files.write(config, line.getBytes(), StandardOpenOption.APPEND);
+                    lines.add(line);
+                    Collections.sort(lines);
+                    index = lines.indexOf(line);
+                }
+                lines.set(index, name + ": " + value);
+                StringBuilder string = new StringBuilder();
+                lines.forEach(line -> string.append(line).append("\n"));
+                Files.write(config, string.toString().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+            }
         } catch (Exception ignored) {}
         return value;
     }
 
     String getLineWithName(final String name) throws IOException {
-        for (final String line: Files.readAllLines(getFileManager().getMkBaseResolve("config/config.cfg")))
+        for (final String line: Files.readAllLines(config))
             if (line.startsWith(name)) return line;
         return null;
     }
