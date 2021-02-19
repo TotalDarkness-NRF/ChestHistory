@@ -2,7 +2,7 @@
     {
       "modid": "chesthistory",
       "name": "Chest History",
-      "description": "Save and view chests.",
+      "description": "Save and view chests. Useful for searching large amount of chests!",
       "version": "${version}",
       "mcversion": "${mcversion}",
       "url": "https://github.com/TotalDarkness-NRF/ChestHistory",

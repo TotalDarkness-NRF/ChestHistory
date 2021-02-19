@@ -16,7 +16,7 @@ as the name is changed.
  0. You just DO WHAT THE FUCK YOU WANT TO.
 */
 
-/**
+/*
  * Created by Hexeption on 18/12/2016.
  */
 
@@ -414,4 +414,3 @@ public class MinecraftFontRenderer extends CFont {
         }
     }
 }
-
