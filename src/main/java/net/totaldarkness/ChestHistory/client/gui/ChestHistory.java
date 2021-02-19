@@ -215,8 +215,7 @@ public class ChestHistory {
         chest.getItems().forEach(item -> nbtData.append(item.serializeNBT().toString()).append("\n"));
         try {
             Files.write(path, nbtData.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
     }
 
     /**
