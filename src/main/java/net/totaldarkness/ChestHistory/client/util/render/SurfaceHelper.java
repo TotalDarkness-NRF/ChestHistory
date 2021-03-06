@@ -237,7 +237,6 @@ public class SurfaceHelper {
                 GlStateManager.enableLighting();
                 GlStateManager.enableDepth();
                 // Fixes opaque cooldown overlay a bit lower
-                // TODO: check if enabled blending still screws things up down the line.
                 GlStateManager.enableBlend();
             }
 

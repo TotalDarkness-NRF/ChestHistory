@@ -119,7 +119,7 @@ public class SettingsGui extends GuiScreen {
         } else if (setting.getDefault() instanceof Boolean) {
             setting.set(!setting.getAsBoolean(), false);
         } else if (setting.getDefault() instanceof Enum){
-            setting.set(SettingEnum.getOrdinal(direction, (Enum) setting.get()));
+            setting.set(SettingEnum.setOrdinal(direction, (Enum) setting.get()));
             ChestHistory.INSTANCE.reSortChestList();
             lastScreen = new ChestGui(lastScreen);
         }

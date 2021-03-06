@@ -9,7 +9,6 @@ import org.lwjgl.input.Keyboard;
 public class ChestGuiService {
 
   public static KeyBinding bind;
-  // TODO create key binds to open gui and add to minecraft settings
   public static ChestGuiService INSTANCE;
 
   private final Setting<Boolean> text = Setting.build("text", "Show text.", true);
